@@ -5,8 +5,10 @@ import AgentRegistry, { type Agent } from '@deepseek-ai/dsh-agent'
 import AgentLoop from '@deepseek-ai/dsh-agent-loop'
 import LlmRuntime, { createUserMessage } from '@deepseek-ai/dsh-llm'
 import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
+import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
 import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
 import ToolRuntime from '@deepseek-ai/dsh-tools'
+import * as NativeToolExecutor from '@deepseek-ai/dsh-tool-executor-native'
 import { apply } from '../src/index'
 import { dashboardDefinition } from '../src/client/dashboard'
 import { DASHBOARD_META_KIND } from '../src/dashboard'
@@ -27,8 +29,10 @@ async function fullHarness(adapter: MockAdapter, configOverrides: Record<string,
   const ctx = new Context()
   await ctx.plugin(LlmRuntime)
   await ctx.plugin(SessionStore)
+  await ctx.plugin(SessionProjectionRegistry)
   await ctx.plugin(SystemPrompt)
   await ctx.plugin(ToolRuntime)
+  await ctx.plugin(NativeToolExecutor)
   await ctx.plugin(AgentRegistry)
   await ctx.plugin(AgentLoop, { agents: [] })
   ctx.llm.registerAdapter(['mock'], adapter)
@@ -49,7 +53,7 @@ async function fullHarness(adapter: MockAdapter, configOverrides: Record<string,
 }
 
 async function driveTurn(ctx: Context, sessionId: string, prompt: string): Promise<Agent> {
-  const agent = ctx.agentLoop.create(SessionId(sessionId), { provider: 'mock', model: 'mock' })
+  const agent = await ctx.agentLoop.create(SessionId(sessionId), { provider: 'mock', model: 'mock' })
   agent.followup(createUserMessage({ content: [{ type: 'text', text: prompt }], source: { kind: 'user' } }))
   await agent.whenIdle()
   return agent
@@ -90,7 +94,7 @@ describe('dsh-smarthome in the real agent loop', () => {
     expect(JSON.stringify(secondRequest.messages)).toContain('Home Assistant reachable')
 
     // The session logged the tool result and completed the turn.
-    const types = (agent.session.events as unknown as SessionEventLike[]).map(e => e.type)
+    const types = (agent.session.snapshotEvents() as unknown as SessionEventLike[]).map(e => e.type)
     expect(types).toContain('tool/result')
     expect(types).toContain('turn/end')
   })
@@ -113,7 +117,7 @@ describe('dsh-smarthome in the real agent loop', () => {
     const secondRequest = adapter.requests[1]!
     expect(JSON.stringify(secondRequest.messages)).toContain('approve to continue')
 
-    const types = (agent.session.events as unknown as SessionEventLike[]).map(e => e.type)
+    const types = (agent.session.snapshotEvents() as unknown as SessionEventLike[]).map(e => e.type)
     expect(types).toContain('tool/result')
     expect(types).toContain('turn/end')
   })
@@ -129,7 +133,7 @@ describe('dsh-smarthome in the real agent loop', () => {
     expect(adapter.requests).toHaveLength(2)
 
     // The dashboard tool result carried the snapshot in its durable meta.
-    const toolResult = (agent.session.events as unknown as Array<{
+    const toolResult = (agent.session.snapshotEvents() as unknown as Array<{
       type: string
       data?: { meta?: { kind?: string } }
     }>).find(e => e.type === 'tool/result' && e.data?.meta?.kind === DASHBOARD_META_KIND)

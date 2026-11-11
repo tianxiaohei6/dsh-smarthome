@@ -13,8 +13,8 @@ import type {
   ConversationMatch,
   ConversationNodeContext,
   ConversationNodeDefinition,
-} from '@deepseek-ai/dsh-client-runtime/client'
-import type { ChatNodeViewProps } from '@deepseek-ai/dsh-client-ui-conversation/client'
+} from '@deepseek-ai/dsh-client-ui-conversation/client'
+import type { ChatConversationViewNode, ChatNodeViewProps } from '@deepseek-ai/dsh-client-ui-chat/client'
 import { DASHBOARD_META_KIND, type DashboardSnapshot } from '../dashboard'
 
 export interface DashboardState {
@@ -27,7 +27,7 @@ export interface DashboardChatData {
   readonly snapshot: DashboardSnapshot
 }
 
-declare module '@deepseek-ai/dsh-client-ui-conversation/client' {
+declare module '@deepseek-ai/dsh-client-ui-chat/client' {
   interface ChatNodeDataMap {
     'smarthome-dashboard': DashboardChatData
   }
@@ -71,7 +71,7 @@ export const dashboardDefinition: ConversationNodeDefinition<DashboardState> = {
   },
   update: (context) => context.state,
   publication: () => 'immediate',
-  buildViewNode: (context) => {
+  buildViewNode: (context): ChatConversationViewNode | null => {
     if (context.state === undefined) return null
     return {
       key: context.key,

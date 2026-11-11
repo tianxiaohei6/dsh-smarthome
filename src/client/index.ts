@@ -5,7 +5,7 @@
  */
 import { createElement, type ReactNode } from 'react'
 import type { Context } from '@deepseek-ai/cordis'
-import type { ClientContext } from '@deepseek-ai/dsh-client-runtime/client'
+import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import { dashboardDefinition, type DashboardChatData } from './dashboard'
 import type { DashboardEntity, DashboardSnapshot } from '../dashboard'
 
@@ -194,7 +194,7 @@ function DashboardView(props: { node: { data: DashboardChatData } }) {
 // ---------------------------------------------------------------------------
 // Client plugin body
 // ---------------------------------------------------------------------------
-export function apply(ctx: ClientContext & Context): void {
+export function apply(ctx: Context): void {
   const uiConversation = (ctx as unknown as { uiConversation: UiConversationService }).uiConversation
   uiConversation.events.register(dashboardDefinition)
   ctx.slots.inject('conversation.chat.node', () => ctx.slots.register({
