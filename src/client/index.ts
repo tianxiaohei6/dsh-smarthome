@@ -9,8 +9,23 @@ import type { ClientContext } from '@deepseek-ai/dsh-client-runtime/client'
 import { dashboardDefinition, type DashboardChatData } from './dashboard'
 import type { DashboardEntity, DashboardSnapshot } from '../dashboard'
 
-/** Required services: the conversation-node registry and the slots service. */
-export const inject = ['conversationEvents', 'slots']
+/**
+ * Required services: the conversation-event Definition registry and the
+ * slots service. DSH 0.2.x moved the registry from the standalone
+ * `conversationEvents` service to `uiConversation.events`; the Definition
+ * contract itself (kind/target/match/start/update/publication/buildViewNode)
+ * is unchanged.
+ */
+export const inject = ['uiConversation', 'slots']
+
+/** Structural view of `uiConversation.events` (avoids pinning a DSH type). */
+interface UiConversationEvents {
+  register(definition: unknown): () => void
+}
+
+interface UiConversationService {
+  readonly events: UiConversationEvents
+}
 
 // ---------------------------------------------------------------------------
 // Theme (matches the DSH Web dark surface)
@@ -180,7 +195,8 @@ function DashboardView(props: { node: { data: DashboardChatData } }) {
 // Client plugin body
 // ---------------------------------------------------------------------------
 export function apply(ctx: ClientContext & Context): void {
-  ctx.conversationEvents.register(dashboardDefinition)
+  const uiConversation = (ctx as unknown as { uiConversation: UiConversationService }).uiConversation
+  uiConversation.events.register(dashboardDefinition)
   ctx.slots.inject('conversation.chat.node', () => ctx.slots.register({
     name: 'conversation.chat.node',
     key: 'smarthome-dashboard',
