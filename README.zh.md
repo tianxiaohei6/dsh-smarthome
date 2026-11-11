@@ -109,14 +109,14 @@ dsh-smarthome 就装在跑 dsh 的**这台电脑**上——不用手机 App、�
 
 ```sh
 # 从 npm 安装（推荐，预构建产物）：
-dsh plugin --profile web add dsh-smarthome
+dsh plugin --profile web add @tianxiaohei6/dsh-smarthome
 
 # 或从 GitHub 安装（源码安装，pnpm 会在安装时自动构建）：
-# dsh plugin --profile web add github:YLifeOnlyOnce/dsh-smarthome
+# dsh plugin --profile web add github:tianxiaohei6/dsh-smarthome
 # 如果 pnpm 拒绝运行 git 依赖的 prepare 构建脚本，需要放行一次：
 #   在 <profile>/pnpm-workspace.yaml 里加上，然后重新执行 add：
 #     allowBuilds:
-#       dsh-smarthome: true
+#       '@tianxiaohei6/dsh-smarthome': true
 ```
 
 安装后重启 `dsh --profile web`。可在 **Settings → Plugins** 管理。
@@ -126,7 +126,7 @@ dsh plugin --profile web add dsh-smarthome
 仓库自带一个**假的 HA 模拟器**：一个会"动"的演示小家——调用服务真的会改变实体状态，适合在接真实硬件之前完整体验插件。
 
 ```sh
-git clone https://github.com/YLifeOnlyOnce/dsh-smarthome
+git clone https://github.com/tianxiaohei6/dsh-smarthome
 cd dsh-smarthome
 pnpm install
 pnpm demo:ha          # 在 http://127.0.0.1:8124 起一个假的 Home Assistant

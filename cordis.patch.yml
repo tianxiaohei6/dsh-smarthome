@@ -9,7 +9,7 @@
 #       tokenEnv: HOME_ASSISTANT_TOKEN
 - insert:
     - id: smarthome
-      name: dsh-smarthome
+      name: '@tianxiaohei6/dsh-smarthome'
       config:
         baseUrl: http://homeassistant.local:8123
         tokenEnv: HOME_ASSISTANT_TOKEN

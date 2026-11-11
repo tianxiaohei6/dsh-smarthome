@@ -1,6 +1,6 @@
 {
-  "name": "dsh-smarthome",
-  "version": "1.4.0",
+  "name": "@tianxiaohei6/dsh-smarthome",
+  "version": "1.4.1",
   "description": "Home Assistant control for DeepSeek Harness agents — read entity states, query history, and call services behind an approval gate.",
   "type": "module",
   "main": "lib/index.js",
@@ -39,6 +39,14 @@
     "ha"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tianxiaohei6/dsh-smarthome.git"
+  },
+  "homepage": "https://github.com/tianxiaohei6/dsh-smarthome#readme",
+  "bugs": {
+    "url": "https://github.com/tianxiaohei6/dsh-smarthome/issues"
+  },
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
     "@deepseek-ai/dsh-credentials": "^0.1.0-rc.5",

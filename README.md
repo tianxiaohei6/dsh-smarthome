@@ -109,14 +109,14 @@ Requires **dsh ≥ 0.1.0-rc.6** (current npm latest).
 
 ```sh
 # From npm (recommended — prebuilt):
-dsh plugin --profile web add dsh-smarthome
+dsh plugin --profile web add @tianxiaohei6/dsh-smarthome
 
 # Or from GitHub (source install — pnpm builds on the fly):
-# dsh plugin --profile web add github:YLifeOnlyOnce/dsh-smarthome
+# dsh plugin --profile web add github:tianxiaohei6/dsh-smarthome
 # If pnpm refuses to run the prepare build on a git dependency, allow it once:
 #   add this to <profile>/pnpm-workspace.yaml, then re-run the add:
 #     allowBuilds:
-#       dsh-smarthome: true
+#       '@tianxiaohei6/dsh-smarthome': true
 ```
 
 Restart `dsh --profile web` after installing. Manage it in **Settings → Plugins**.
@@ -126,7 +126,7 @@ Restart `dsh --profile web` after installing. Manage it in **Settings → Plugin
 No HA instance? The repo ships a **fake HA emulator** with a small living demo home whose state *actually changes* when you call services — perfect for trying the plugin before wiring up real hardware.
 
 ```sh
-git clone https://github.com/YLifeOnlyOnce/dsh-smarthome
+git clone https://github.com/tianxiaohei6/dsh-smarthome
 cd dsh-smarthome
 pnpm install
 pnpm demo:ha          # serves a fake Home Assistant at http://127.0.0.1:8124
