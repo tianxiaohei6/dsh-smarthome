@@ -74,7 +74,7 @@ export class HomeAssistantClient {
     return this.token
   }
 
-  private async request<T>(path: string, init: RequestInit = {}): Promise<T> {
+  private async request<T>(path: string, init: RequestInit = {}, read: 'json' | 'text' = 'json'): Promise<T> {
     const token = await this.tokenFor()
     if (!token) {
       throw new HomeAssistantError(
@@ -102,6 +102,7 @@ export class HomeAssistantClient {
           res.status,
         )
       }
+      if (read === 'text') return (await res.text()) as T
       return (await res.json()) as T
     } catch (err) {
       if (err instanceof HomeAssistantError) throw err
@@ -174,10 +175,13 @@ export class HomeAssistantClient {
 
   /** `POST /api/template` — render a Jinja2 template server-side. */
   renderTemplate(template: string): Promise<string> {
+    // Home Assistant answers /api/template with the rendered TEXT (text/plain),
+    // not JSON — parsing it as JSON rejects every template that is not literal
+    // JSON (a bare `off` string included).
     return this.request<string>('/api/template', {
       method: 'POST',
       body: JSON.stringify({ template }),
-    })
+    }, 'text')
   }
 }
 

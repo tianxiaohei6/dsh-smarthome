@@ -54,7 +54,7 @@ Talk to your home the way you talk to an assistant — every write goes through 
 
 ## 💡 Why it's good — how useful is it?
 
-- **One-line install**: `dsh plugin --profile web add @tianxiaohei6/dsh-smarthome`, then just talk to the agent.
+- **One-line install**: `dsh plugin --profile <profile> add @tianxiaohei6/dsh-smarthome`, then just talk to the agent.
 - **Safe by default**: every state-changing call stops for human approval; `allowedDomains` is a second deny-list belt. The agent can never touch your home without you saying yes.
 - **Natural language control**: no apps to fiddle with, no API docs to memorize — "dim the lights" just works.
 - **Always current**: state changes reach the agent in real time over WebSocket, so it never "thinks" the light is still on when you switched it off.
@@ -148,7 +148,7 @@ In another terminal, configure the plugin (add to your profile's `cordis.patch.y
 Then start dsh and try:
 
 ```sh
-HOME_ASSISTANT_TOKEN=demo-token dsh --profile web
+HOME_ASSISTANT_TOKEN=demo-token dsh --profile <profile>
 ```
 
 > "Check that Home Assistant is reachable, then list the lights."
@@ -188,7 +188,7 @@ Override the plugin row in your profile's `cordis.patch.yml` (later layers win):
 Then run dsh with the variable set:
 
 ```sh
-HOME_ASSISTANT_TOKEN=<token> dsh --profile web
+HOME_ASSISTANT_TOKEN=<token> dsh --profile <profile>
 ```
 
 `baseUrl` defaults to `http://homeassistant.local:8123` (the standard Home Assistant mDNS host). If no token is configured the plugin still loads — every tool call fails with a clear "not configured" message instead of crashing the harness.

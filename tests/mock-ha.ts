@@ -36,6 +36,15 @@ export function startMockHa(options: MockHaOptions = {}): Promise<{ server: Serv
       if (options.latencyMs) setTimeout(respondNow, options.latencyMs)
       else respondNow()
     }
+    // Real Home Assistant answers rendered templates as text/plain, not JSON.
+    const respondText = (status: number, text: string) => {
+      const respondNow = () => {
+        res.writeHead(status, { 'Content-Type': 'text/plain; charset=utf-8' })
+        res.end(text)
+      }
+      if (options.latencyMs) setTimeout(respondNow, options.latencyMs)
+      else respondNow()
+    }
 
     if (options.unauthorized) {
       return respond(401, { message: 'Invalid token' })
@@ -121,7 +130,7 @@ export function startMockHa(options: MockHaOptions = {}): Promise<{ server: Serv
       req.on('end', () => {
         const template = (body as { template?: string })?.template ?? ''
         templates.push(template)
-        respondRaw(200, JSON.stringify(`rendered: ${template}`))
+        respondText(200, `rendered: ${template}`)
       })
       return
     }

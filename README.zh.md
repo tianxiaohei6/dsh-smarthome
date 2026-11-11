@@ -54,7 +54,7 @@
 
 ## 💡 为什么好用？
 
-- **一行安装**：`dsh plugin --profile web add @tianxiaohei6/dsh-smarthome`，装完直接说话
+- **一行安装**：`dsh plugin --profile <profile> add @tianxiaohei6/dsh-smarthome`，装完直接说话
 - **安全默认**：所有改变状态的调用都停在人工审批前；`allowedDomains` 域白名单是第二道保险——**agent 不经你同意永远碰不了你的家**
 - **自然语言控制**：不用翻 App、不用记 API，一句「把灯调暗」就搞定
 - **状态永远新鲜**：WebSocket 实时推送，agent 不会"以为"灯还开着
@@ -148,7 +148,7 @@ pnpm demo:ha          # 在 http://127.0.0.1:8124 起一个假的 Home Assistant
 然后启动 dsh 试试：
 
 ```sh
-HOME_ASSISTANT_TOKEN=demo-token dsh --profile web
+HOME_ASSISTANT_TOKEN=demo-token dsh --profile <profile>
 ```
 
 > 「检查 Home Assistant 是否在线，然后列出所有灯。」
@@ -188,7 +188,7 @@ HOME_ASSISTANT_TOKEN=demo-token dsh --profile web
 然后带上环境变量启动：
 
 ```sh
-HOME_ASSISTANT_TOKEN=<token> dsh --profile web
+HOME_ASSISTANT_TOKEN=<token> dsh --profile <profile>
 ```
 
 `baseUrl` 默认为 `http://homeassistant.local:8123`（Home Assistant 标准 mDNS 地址）。未配置令牌时插件仍会加载——每次调用都会给出清晰的「未配置」错误，而不是让 harness 崩溃。
