@@ -105,7 +105,7 @@ dsh-smarthome 就装在跑 dsh 的**这台电脑**上——不用手机 App、�
 
 ## 📦 安装
 
-需要 **dsh ≥ 0.1.0-rc.6**（当前 npm latest）。
+需要 **dsh ≥ 0.2.0**（当前运行时 0.2.2-rc.1）。
 
 插件在 npm 上的包名是 **`@tianxiaohei6/dsh-smarthome`**——请安装这个包，不要装 npm 上另一个无关且已停更的同名包 `dsh-smarthome`。
 
@@ -221,7 +221,7 @@ node scripts/capture-demo.mjs   # 重新生成 README 截图
 - 需要**长期访问令牌**（个人资料 → 安全 → 长期访问令牌）。
 - 注意事项：不支持自签名 HTTPS 证书（请用 `http://` 或有效证书）；受限制的令牌（无法调用服务）会导致 `ha_call_service` 失败。
 
-DeepSeek Harness 处于 developer preview，迭代很快。本插件已针对 npm 发布的 `@deepseek-ai/dsh@0.1.0-rc.7` 验证；如果 harness 更新导致不兼容，请提 issue。
+DeepSeek Harness 处于 developer preview，迭代很快。本插件已针对 npm 发布的 `@deepseek-ai/dsh@0.2.2-rc.1` 验证；如果 harness 更新导致不兼容，请提 issue。
 
 ## 📄 许可证
 

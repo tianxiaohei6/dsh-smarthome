@@ -105,7 +105,7 @@ Example prompts:
 
 ## 📦 Install
 
-Requires **dsh ≥ 0.1.0-rc.6** (current npm latest).
+Requires **dsh ≥ 0.2.0** (current runtime 0.2.2-rc.1).
 
 The plugin is published to npm as **`@tianxiaohei6/dsh-smarthome`** — install that package, not the unrelated, unmaintained `dsh-smarthome` on npm.
 
@@ -221,7 +221,7 @@ node scripts/capture-demo.mjs   # regenerate the README screenshots
 - Requires a **long-lived access token** (Profile → Security → Long-lived access tokens).
 - Caveats: self-signed HTTPS certificates are not supported (use `http://` or a valid cert); a restricted token that cannot call services will fail `ha_call_service`.
 
-DeepSeek Harness is in developer preview and changes fast. This plugin is verified against the published `@deepseek-ai/dsh@0.1.0-rc.7` line; if a harness update breaks it, please open an issue.
+DeepSeek Harness is in developer preview and changes fast. This plugin is verified against the published `@deepseek-ai/dsh@0.2.2-rc.1` line; if a harness update breaks it, please open an issue.
 
 ## 📄 License
 
