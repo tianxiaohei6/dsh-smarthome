@@ -44,7 +44,7 @@ export function startMockHa(options: MockHaOptions = {}): Promise<{ server: Serv
     const url = new URL(req.url ?? '/', 'http://localhost')
     const path = url.pathname
 
-    if (req.method === 'GET' && path === '/api/') return respondRaw(200, '"API running."')
+    if (req.method === 'GET' && path === '/api/') return respondRaw(200, '{"message":"API running."}')
     if (req.method === 'GET' && path === '/api/config') {
       return respond(200, {
         location_name: 'Test Home',

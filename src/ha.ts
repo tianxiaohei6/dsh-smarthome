@@ -118,9 +118,15 @@ export class HomeAssistantClient {
     }
   }
 
-  /** `GET /api/` — returns "API running." when reachable. */
-  health(): Promise<string> {
-    return this.request<string>('/api/')
+  /** `GET /api/` — Home Assistant answers `{"message":"API running."}` when reachable. */
+  async health(): Promise<string> {
+    const body = await this.request<unknown>('/api/')
+    if (typeof body === 'string') return body
+    if (body && typeof body === 'object') {
+      const message = (body as { message?: unknown }).message
+      if (typeof message === 'string') return message
+    }
+    return JSON.stringify(body)
   }
 
   /** `GET /api/config` — instance name, version, timezone, unit system. */
