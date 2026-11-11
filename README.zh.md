@@ -11,7 +11,7 @@
   <a href="README.md">English</a> ·
   <a href="https://github.com/topics/dsh-plugin"><img src="https://img.shields.io/badge/dsh--plugin-ecosystem-4d7cfe" alt="dsh-plugin"></a> ·
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT"></a> ·
-  <a href="https://github.com/YLifeOnlyOnce/dsh-smarthome/actions/workflows/ci.yml"><img src="https://github.com/YLifeOnlyOnce/dsh-smarthome/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/tianxiaohei6/dsh-smarthome/actions/workflows/ci.yml"><img src="https://github.com/tianxiaohei6/dsh-smarthome/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
 <p align="center">除 harness 本身外零运行时依赖。使用 Home Assistant 内置 REST API——不需要 MQTT、WebSocket 或额外守护进程。</p>
@@ -54,7 +54,7 @@
 
 ## 💡 为什么好用？
 
-- **一行安装**：`dsh plugin --profile web add dsh-smarthome`，装完直接说话
+- **一行安装**：`dsh plugin --profile web add @tianxiaohei6/dsh-smarthome`，装完直接说话
 - **安全默认**：所有改变状态的调用都停在人工审批前；`allowedDomains` 域白名单是第二道保险——**agent 不经你同意永远碰不了你的家**
 - **自然语言控制**：不用翻 App、不用记 API，一句「把灯调暗」就搞定
 - **状态永远新鲜**：WebSocket 实时推送，agent 不会"以为"灯还开着
@@ -107,19 +107,23 @@ dsh-smarthome 就装在跑 dsh 的**这台电脑**上——不用手机 App、�
 
 需要 **dsh ≥ 0.1.0-rc.6**（当前 npm latest）。
 
-```sh
-# 从 npm 安装（推荐，预构建产物）：
-dsh plugin --profile web add @tianxiaohei6/dsh-smarthome
+插件在 npm 上的包名是 **`@tianxiaohei6/dsh-smarthome`**——请安装这个包，不要装 npm 上另一个无关且已停更的同名包 `dsh-smarthome`。
 
-# 或从 GitHub 安装（源码安装，pnpm 会在安装时自动构建）：
-# dsh plugin --profile web add github:tianxiaohei6/dsh-smarthome
+```sh
+# 从 npm 安装（推荐，预构建产物，无需构建）：
+dsh plugin --profile <profile> add @tianxiaohei6/dsh-smarthome
+
+# 或直接从 GitHub 安装（源码安装，pnpm 会在安装时自动构建）：
+# dsh plugin --profile <profile> add github:tianxiaohei6/dsh-smarthome
 # 如果 pnpm 拒绝运行 git 依赖的 prepare 构建脚本，需要放行一次：
 #   在 <profile>/pnpm-workspace.yaml 里加上，然后重新执行 add：
 #     allowBuilds:
 #       '@tianxiaohei6/dsh-smarthome': true
 ```
 
-安装后重启 `dsh --profile web`。可在 **Settings → Plugins** 管理。
+`<profile>` 是你的 dsh profile 名（`~/.dsh/profiles/` 下的目录名，例如 `web`、`desktop`）。安装后重启 `dsh --profile <profile>`，可在 **Settings → Plugins** 管理。
+
+> **从旧包 `dsh-smarthome` 升级？** 先移除旧 bundle（Settings → Plugins，或 `dsh plugin --profile <profile> remove dsh-smarthome`）。两个 bundle 注册的是同一个 `smarthome` 行 id，同一时间只能启用其中一个。
 
 ## 🧪 没有 Home Assistant？先玩演示模式
 

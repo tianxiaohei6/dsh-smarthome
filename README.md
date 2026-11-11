@@ -11,7 +11,7 @@
   <a href="README.zh.md">中文</a> ·
   <a href="https://github.com/topics/dsh-plugin"><img src="https://img.shields.io/badge/dsh--plugin-ecosystem-4d7cfe" alt="dsh-plugin"></a> ·
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT"></a> ·
-  <a href="https://github.com/YLifeOnlyOnce/dsh-smarthome/actions/workflows/ci.yml"><img src="https://github.com/YLifeOnlyOnce/dsh-smarthome/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/tianxiaohei6/dsh-smarthome/actions/workflows/ci.yml"><img src="https://github.com/tianxiaohei6/dsh-smarthome/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
 <p align="center">Zero runtime dependencies beyond the harness itself. Uses Home Assistant's built-in REST API — no MQTT, no WebSocket, no extra daemon.</p>
@@ -54,7 +54,7 @@ Talk to your home the way you talk to an assistant — every write goes through 
 
 ## 💡 Why it's good — how useful is it?
 
-- **One-line install**: `dsh plugin --profile web add dsh-smarthome`, then just talk to the agent.
+- **One-line install**: `dsh plugin --profile web add @tianxiaohei6/dsh-smarthome`, then just talk to the agent.
 - **Safe by default**: every state-changing call stops for human approval; `allowedDomains` is a second deny-list belt. The agent can never touch your home without you saying yes.
 - **Natural language control**: no apps to fiddle with, no API docs to memorize — "dim the lights" just works.
 - **Always current**: state changes reach the agent in real time over WebSocket, so it never "thinks" the light is still on when you switched it off.
@@ -107,19 +107,23 @@ Example prompts:
 
 Requires **dsh ≥ 0.1.0-rc.6** (current npm latest).
 
-```sh
-# From npm (recommended — prebuilt):
-dsh plugin --profile web add @tianxiaohei6/dsh-smarthome
+The plugin is published to npm as **`@tianxiaohei6/dsh-smarthome`** — install that package, not the unrelated, unmaintained `dsh-smarthome` on npm.
 
-# Or from GitHub (source install — pnpm builds on the fly):
-# dsh plugin --profile web add github:tianxiaohei6/dsh-smarthome
+```sh
+# From npm (recommended — prebuilt, no build step):
+dsh plugin --profile <profile> add @tianxiaohei6/dsh-smarthome
+
+# Or straight from GitHub (source install — pnpm builds on the fly):
+# dsh plugin --profile <profile> add github:tianxiaohei6/dsh-smarthome
 # If pnpm refuses to run the prepare build on a git dependency, allow it once:
 #   add this to <profile>/pnpm-workspace.yaml, then re-run the add:
 #     allowBuilds:
 #       '@tianxiaohei6/dsh-smarthome': true
 ```
 
-Restart `dsh --profile web` after installing. Manage it in **Settings → Plugins**.
+`<profile>` is the name of your dsh profile (the directory under `~/.dsh/profiles/`, e.g. `web`, `desktop`). Restart `dsh --profile <profile>` after installing, and manage it in **Settings → Plugins**.
+
+> **Upgrading from the legacy `dsh-smarthome` package?** Remove that bundle first (Settings → Plugins, or `dsh plugin --profile <profile> remove dsh-smarthome`). Both bundles register the same `smarthome` row id, so only one of them can be enabled at a time.
 
 ## 🧪 Try it without Home Assistant (demo mode)
 
